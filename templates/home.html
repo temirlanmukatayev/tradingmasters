@@ -1,5 +1,6 @@
 {% extends '_base.html' %}
 
+{% load static %}
 
 {% block title %}
   Home
@@ -16,5 +17,8 @@
     <a href="{% url 'login' %}">Log In</a>
     <a href="{% url 'signup' %}">Sign Up</a>
   {% endif %}
+  <p>
+    <img src="{% static 'images/astonished.jpg' %}" alt="Astonished man">
+  </p>
 {% endblock content %}
   
