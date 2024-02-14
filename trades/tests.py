@@ -26,7 +26,7 @@ class HomePageTests(SimpleTestCase):
         self.assertNotContains(self.response, 'I should not be on the page')
 
     def test_homepage_url_resolves_homepage_view(self):
-        view = resolve('/trades/')
+        view = resolve('/')
         self.assertEqual(
             view.func.__name__,
             HomePageView.as_view().__name__
