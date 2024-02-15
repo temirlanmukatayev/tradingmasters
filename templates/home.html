@@ -5,17 +5,14 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-  <h1>Homepage</h1>
-  {% if user.is_authenticated %}
-    <p>Hi, {{ user.username }}!</p>
-    <a href="{% url 'account_logout' %}">Log Out</a>
-  {% else %}
-    <p>You are not logged in.</p>
-    <a href="{% url 'account_login' %}">Log In</a>
-    <a href="{% url 'account_signup' %}">Sign Up</a>
-  {% endif %}
-  <p>
-    <img src="{% static 'images/astonished.jpg' %}" alt="Astonished man">
-  </p>
+  <div class="row mt-5">
+    <div class="col">
+      <h1>Be profitable consistently</h1>
+      <p>
+        Trading Masters is a platform for traders striving to be profitable consistently
+        and build the best strategy possible.
+      </p>
+    </div>
+  </div>
 {% endblock content %}
   
