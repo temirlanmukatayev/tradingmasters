@@ -7,10 +7,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+          <a class="nav-link {% if request.path == '/' %}active{% endif %}" aria-current="page" href="{% url 'home' %}">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Trades</a>
+          <a class="nav-link {% if 'trades' in request.path %}active{% endif %}" href="#">Trades</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Journal</a>
@@ -34,7 +34,7 @@
           </li>
         {% else %}
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'account_login' %}">Log In</a>
+            <a class="nav-link {% if 'login' in request.path %}active{% endif %}" href="{% url 'account_login' %}">Log In</a>
           </li>
           <li class="nav-item">
             <a class="btn btn-outline-primary" href="{% url 'account_signup' %}">Sign Up</a>
