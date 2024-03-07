@@ -1,0 +1,56 @@
+Models:
+
+  - TradingAccount
+    - owner
+    - title
+    - description
+    - type
+      - real
+      - challenge
+      - funded
+    - initial balance
+    - active ?
+    - created_at
+    - updated_at
+  
+  - Trade
+    - owner
+    - opened_at
+    - ticket
+    - type
+      - buy
+      - sell
+    - volume
+    - symbol
+    - opening_price
+    - stop_loss
+    - take_profit
+    - closed_at
+    - closing_price
+    - commission
+    - fee
+    - swap
+    - profit
+    - trading_account
+    - setup
+    - argument
+    - market
+      - fx
+      - indices
+      - crypto
+      - stocks
+
+  - Setup
+    - owner
+    - title
+    - slug
+    - description
+    - links
+    - images
+
+  - Argument
+    - owner
+    - title
+    - slug
+    - description
+  
