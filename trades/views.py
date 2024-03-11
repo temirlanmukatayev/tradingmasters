@@ -34,6 +34,7 @@ class TradingAccountsCreateView(LoginRequiredMixin, CreateView):
 
 class TradingAccountsListView(LoginRequiredMixin, OwnerMixin, ListView):
     model = TradingAccount
+    paginate_by = 10
     context_object_name = 'accounts'
     template_name = 'accounts_list.html'
 
