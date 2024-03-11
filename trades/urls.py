@@ -1,8 +1,13 @@
 from django.urls import path
 
-from .views import HomePageView
+from . import views
 
 
 urlpatterns = [
-    path('', HomePageView.as_view(), name='home'),
+    path('', views.HomePageView.as_view(), name='home'),
+    path('trading_history/', views.TradingHistoryView.as_view(), name='trading_history'),
+    path('accounts_create/', views.TradingAccountsCreateView.as_view(), name='accounts_create'),
+    path('accounts_list/', views.TradingAccountsListView.as_view(), name='accounts_list'),
+    path('accounts/<pk>/update/', views.TradingAccountUpdateView.as_view(), name='accounts_update'),
+    path('accounts/<pk>/delete/', views.TradingAccountDeleteView.as_view(), name='accounts_delete'),
 ]

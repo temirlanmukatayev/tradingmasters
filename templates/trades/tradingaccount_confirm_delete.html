@@ -1,0 +1,22 @@
+{% extends '_base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Delete trading account{% endblock title %}
+
+{% block content %}
+  <div class="row mt-5">
+    <div class="col">
+      <h1>Account deleting</h1>
+      <form method="post">{% csrf_token %}
+        <p>Please remember! All related trades will be deleted also.</p>
+        <p>Are you sure you want to delete "{{ object }}"?</p>
+        {{ form }}
+        <input class="btn btn-danger" type="submit" value="Confirm">
+        <input class="btn btn-primary" type=button value="Go Back" onClick="javascript:history.go(-1);">
+    </form>
+    </div>
+  </div>
+{% endblock content %}
+  

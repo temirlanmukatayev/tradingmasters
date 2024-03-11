@@ -1,0 +1,26 @@
+{% extends '_base.html' %}
+
+{% load static %}
+
+{% block title %}Trading History{% endblock title %}
+
+{% block content %}
+  <div class="row mt-5">
+    <div class="col">
+      <h1>My Trading History</h1>
+      <p>
+        Here are all my trades.
+      </p>
+      
+      {% for account in accounts %}
+        <p>{{ account.title }}</p>
+      {% endfor %}
+
+      {% for trade in trades %}
+        {{ trade.identifier }} | {{ trade.symbol }} | {{ trade.side }}
+      {% endfor %}
+        
+    </div>
+  </div>
+{% endblock content %}
+  

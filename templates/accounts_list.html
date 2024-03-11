@@ -1,0 +1,45 @@
+{% extends '_base.html' %}
+
+{% load static %}
+
+{% block title %}Trading Accounts{% endblock title %}
+
+{% block content %}
+  <div class="row">
+    <div class="col mt-5">
+      <h1>My Trading Accounts <a href="{% url 'accounts_create' %}" class="btn btn-sm btn-outline-primary">Create new</a></h1>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Identifier</th>
+            <th scope="col">Title</th>
+            <th scope="col">Type</th>
+            <th scope="col">Initial Balance</th>
+            <th scope="col">Active</th>
+            <th scope="col">Created</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for account in accounts %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ account.identifier }}</td>
+            <td>{{ account.title }}</td>
+            <td>{{ account.get_type_display }}</td>
+            <td>{{ account.initial_balance }}</td>
+            <td>{{ account.active }}</td>
+            <td>{{ account.created_at }}</td>
+            <td>
+              <a class="btn btn-outline-primary btn-sm" href="{% url 'accounts_update' account.pk %}">Edit</a>
+              <a class="btn btn-outline-primary btn-sm" href="#">Trades</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock content %}
+  
