@@ -1,6 +1,7 @@
 {% extends '_base.html' %}
 
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block title %}Trading Accounts{% endblock title %}
 
@@ -8,6 +9,25 @@
   <div class="row">
     <div class="col mt-5">
       <h1>My Trading Accounts <a href="{% url 'accounts_create' %}" class="btn btn-sm btn-outline-primary">Create new</a></h1>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col">
+        <div class="card">
+            <form method="get" action="">
+              <h5 class="card-header">Filters</h5>
+              <div class="card-body">
+                  {{ filter.form | crispy }}
+              </div>
+              <div class="card-footer text-center">
+                  <input class="btn btn-primary" type="submit" value="Filter" />
+              </div>
+            </form>
+        </div>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col">
       <table class="table">
         <thead>
           <tr>
@@ -26,7 +46,7 @@
           <tr>
             <th scope="row">{{ forloop.counter }}</th>
             <td>{{ account.identifier }}</td>
-            <td>{{ account.title }}</td>
+            <td style="word-wrap: break-word; max-width: 300px;">{{ account.title }}</td>
             <td>{{ account.get_type_display }}</td>
             <td>{{ account.initial_balance }}</td>
             <td>{{ account.active }}</td>

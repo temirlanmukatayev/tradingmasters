@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'allauth',
     'allauth.account',
+    'django_filters',
 
     # Local
     'users.apps.UsersConfig',

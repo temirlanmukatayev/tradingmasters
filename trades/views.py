@@ -2,7 +2,9 @@ from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django_filters.views import FilterView
 
+from .filters import TradingAccountFilter
 from .models import TradingAccount, Trade
 
 
@@ -32,11 +34,12 @@ class TradingAccountsCreateView(LoginRequiredMixin, CreateView):
         return super(TradingAccountsCreateView, self).form_valid(form)
 
 
-class TradingAccountsListView(LoginRequiredMixin, OwnerMixin, ListView):
+class TradingAccountsListView(LoginRequiredMixin, OwnerMixin, FilterView):
     model = TradingAccount
     paginate_by = 10
     context_object_name = 'accounts'
     template_name = 'accounts_list.html'
+    filterset_class = TradingAccountFilter
 
 
 class TradingAccountUpdateView(LoginRequiredMixin, OwnerEditMixin, UpdateView):
