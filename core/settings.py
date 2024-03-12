@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'django_filters',
+    'django_tables2',
 
     # Local
     'users.apps.UsersConfig',
@@ -170,3 +171,5 @@ ACCOUNT_UNIQUE_EMAIL = True
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'static'
+
+DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap5.html"

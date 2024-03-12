@@ -3,9 +3,11 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django_filters.views import FilterView
+from django_tables2 import SingleTableView
 
 from .filters import TradingAccountFilter
 from .models import TradingAccount, Trade
+from .tables import TradingAccountTable
 
 
 class OwnerMixin:
@@ -34,12 +36,12 @@ class TradingAccountsCreateView(LoginRequiredMixin, CreateView):
         return super(TradingAccountsCreateView, self).form_valid(form)
 
 
-class TradingAccountsListView(LoginRequiredMixin, OwnerMixin, FilterView):
+class TradingAccountListView(LoginRequiredMixin, OwnerMixin, FilterView, SingleTableView):
     model = TradingAccount
-    paginate_by = 10
-    context_object_name = 'accounts'
-    template_name = 'accounts_list.html'
+    table_class = TradingAccountTable
     filterset_class = TradingAccountFilter
+    paginate_by = 3
+    template_name = 'accounts_list.html'
 
 
 class TradingAccountUpdateView(LoginRequiredMixin, OwnerEditMixin, UpdateView):

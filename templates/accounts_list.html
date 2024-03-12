@@ -2,6 +2,7 @@
 
 {% load static %}
 {% load crispy_forms_tags %}
+{% load django_tables2 %}
 
 {% block title %}Trading Accounts{% endblock title %}
 
@@ -13,115 +14,26 @@
   </div>
   <div class="row mt-3">
     <div class="col">
-        <div class="card">
-            <form method="get" action="">
-              <h5 class="card-header">Filters</h5>
-              <div class="card-body">
-                  {{ filter.form | crispy }}
-              </div>
-              <div class="card-footer text-center">
-                  <input class="btn btn-primary" type="submit" value="Filter" />
-              </div>
-            </form>
-        </div>
+      <form class="form" method="get" action="">
+      {{ filter.form }}
+      <input class="btn btn-sm btn-primary" type="submit" value="Filter" />
+    </form>
     </div>
   </div>
-  <div class="row mt-5">
+  <div class="row mt-3">
     <div class="col">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Identifier</th>
-            <th scope="col">Title</th>
-            <th scope="col">Type</th>
-            <th scope="col">Initial Balance</th>
-            <th scope="col">Active</th>
-            <th scope="col">Created</th>
-            <th scope="col">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for account in accounts %}
-          <tr>
-            <th scope="row">{{ forloop.counter }}</th>
-            <td>{{ account.identifier }}</td>
-            <td style="word-wrap: break-word; max-width: 300px;">{{ account.title }}</td>
-            <td>{{ account.get_type_display }}</td>
-            <td>{{ account.initial_balance }}</td>
-            <td>{{ account.active }}</td>
-            <td>{{ account.created_at }}</td>
-            <td>
-              <a class="btn btn-outline-primary btn-sm" href="{% url 'accounts_update' account.pk %}">Edit</a>
-              <a class="btn btn-outline-primary btn-sm" href="#">Trades</a>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      
-      <!-- pagination starts -->
-      <nav aria-label="paginator">
-        <ul class="pagination flex-wrap justify-content-center">
-          <li class="page-item disabled">
-            {% if page_obj.has_previous %}
-              <li class="page-item">
-                <a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}">
-                  <span aria-hidden="true">&laquo;</span>
-                </a>
-              </li>
-            {% endif %}
-            {% if page_obj.number > 3 %}
-              <li class="page-item">
-                <a class="page-link" href="{{ request.path }}?page=1">1</a>
-              </li>
-            {% endif %}
-            {% if page_obj.number > 4 %}
-                <li class="page-item">
-                <span class="page-link">....</span>
-                </li>
-            {% endif %}
-          </li>
-
-          {% for i in page_obj.paginator.page_range %}
-            {% if page_obj.number == i %}
-              <li class="page-item active">
-                <span class="page-link">
-                  {{ i }}
-                  <span class="sr-only"></span>
-                </span>
-              </li>
-              {% elif i > page_obj.number|add:'-3' and i < page_obj.number|add:'3' %}
-                <li class="page-item">
-                  <a class="page-link" href="{{ request.path }}?page={{ i }}">{{ i }}</a>
-                </li>
-            {% endif %}
-          {% endfor %}
-
-          {% if page_obj.has_next %}
-            {% if page_obj.number < page_obj.paginator.num_pages|add:'-3' %}
-                <li class="page-item">
-                    <span class="page-link">....</span>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
-                </li>
-            {% elif page_obj.number < page_obj.paginator.num_pages|add:'-2' %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
-                </li>
-            {% endif %}  
-            <li class="page-item">
-              <a class="page-link" href="?page={{ page_obj.next_page_number }}">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-          {% endif %}
-        </ul>
-      </nav>
-      <!-- pagination end -->
-
+      {% render_table table %}
     </div>
   </div>
+
+<style>
+  th.sortable a{
+    text-decoration: none;
+    color: #212529;
+  }
+  th.ascend a {
+  color: #0d6efd;
+  }
+</style>
 {% endblock content %}
   

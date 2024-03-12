@@ -35,8 +35,8 @@ class TradingAccount(models.Model):
     def __str__(self):
         return self.title
     
-    # def get_absolute_url(self):
-    #     return reverse('accounts_list')
+    def get_absolute_url(self):
+        return reverse('accounts_list')
         # return reverse('accounts_list', args=[str(self.id)])
 
 
