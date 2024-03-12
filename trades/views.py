@@ -40,7 +40,7 @@ class TradingAccountListView(LoginRequiredMixin, OwnerMixin, FilterView, SingleT
     model = TradingAccount
     table_class = TradingAccountTable
     filterset_class = TradingAccountFilter
-    paginate_by = 3
+    paginate_by = 10
     template_name = 'accounts_list.html'
 
 
