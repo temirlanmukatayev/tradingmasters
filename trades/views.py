@@ -73,9 +73,9 @@ class TradeCreateView(LoginRequiredMixin, CreateView):
         form.instance.owner = self.request.user
         # return super(TradeCreateView, self).form_valid(form)
         result = super(TradeCreateView, self).form_valid(form)
-        url_textarea = form.cleaned_data['url_textarea']
-        if url_textarea != "":
-            urls = url_textarea.split()
+        links = form.cleaned_data['links']
+        if links != "":
+            urls = links.split()
             for url in urls:
                 TradeLink.objects.create(trade=form.instance, url=url, )
             # print('\n\n', url_textarea.split(), '\n\n')
