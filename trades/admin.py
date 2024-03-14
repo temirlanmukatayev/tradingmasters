@@ -17,4 +17,4 @@ class TradeAdmin(admin.ModelAdmin):
 
 @admin.register(TradeLink)
 class TradeLinkAdmin(admin.ModelAdmin):
-    list_display = ['title', 'trade', 'url']
+    list_display = ['trade', 'url']

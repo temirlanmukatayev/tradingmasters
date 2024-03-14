@@ -10,6 +10,15 @@
       <h3>Trade {{ trade }} <a href="{% url 'trades_update' trade.pk %}" class="btn btn-sm btn-outline-primary">Update</a></h3>
       
       <p>{{ trade.open_price }}</p>
+      
+      {% with trade.tradelink_set.all as links %}
+        
+        {% for link in links %}
+          <p><a class="text-decoration-none" href="{{ link.url }}">{{ link }}</a></p>
+        {% endfor %}
+          
+      {% endwith %}
+        
         
     </div>
   </div>

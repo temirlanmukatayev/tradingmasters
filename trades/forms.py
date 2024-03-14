@@ -4,8 +4,9 @@ from .models import Trade
 
 
 class TradeForm(forms.ModelForm):
-    url_title = forms.CharField(required=False, max_length=64)
-    url = forms.URLField(required=False)
+    url_textarea = forms.CharField(required=False,
+                                   widget=forms.Textarea(attrs={'rows': 5, 'cols': 30}),
+                                   help_text='Each url from new line')
     
     class Meta:
         model = Trade

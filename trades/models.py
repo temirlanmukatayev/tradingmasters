@@ -1,3 +1,4 @@
+from urllib.parse import urlparse
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
@@ -107,9 +108,13 @@ class Trade(models.Model):
 
 
 class TradeLink(models.Model):
-    title = models.CharField(blank=True, max_length=64)
+    # title = models.CharField(blank=True, max_length=64)
     trade = models.ForeignKey(Trade, on_delete=models.CASCADE)
     url = models.URLField()
+
+    def __str__(self):
+        title = 'Link to ' + urlparse(self.url).netloc
+        return title
 
 
 # class Setup(models.Model):
