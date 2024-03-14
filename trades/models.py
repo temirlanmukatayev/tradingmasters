@@ -53,8 +53,8 @@ class Trade(models.Model):
         CRYPTO = 'CR', 'Crypto'
 
     class Reason(models.TextChoices):
-        TP = 'TP', 'Take Profit'
-        SL = 'SL', 'Stop Loss'
+        TP = 'TP', 'TP'
+        SL = 'SL', 'TP'
 
     owner = models.ForeignKey(
         get_user_model(),

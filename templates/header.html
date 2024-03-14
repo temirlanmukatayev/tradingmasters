@@ -13,7 +13,7 @@
           <a class="nav-link {% if 'accounts' in request.path %}active{% endif %}" href="{% url 'accounts_list' %}">Accounts</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {% if 'trades' in request.path %}active{% endif %}" href="#">Trades</a>
+          <a class="nav-link {% if 'trades' in request.path %}active{% endif %}" href="{% url 'trades_list' %}">Trades</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Journal</a>
