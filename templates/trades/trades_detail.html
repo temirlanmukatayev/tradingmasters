@@ -1,0 +1,17 @@
+{% extends '_base.html' %}
+
+{% load static %}
+
+{% block title %}Trade details{% endblock title %}
+
+{% block content %}
+  <div class="row mt-5 mb-5">
+    <div class="col">
+      <h3>Trade {{ trade }} <a href="{% url 'trades_update' trade.pk %}" class="btn btn-sm btn-outline-primary">Update</a></h3>
+      
+      <p>{{ trade.open_price }}</p>
+        
+    </div>
+  </div>
+{% endblock content %}
+  

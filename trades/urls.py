@@ -12,6 +12,7 @@ urlpatterns = [
     path('accounts/<pk>/delete/', views.TradingAccountDeleteView.as_view(), name='accounts_delete'),
     # trades
     path('trades_list/', views.TradeListView.as_view(), name='trades_list'),
+    path('trades/<pk>/detail/', views.TradeDetailView.as_view(), name='trades_detail'),
     path('trades_create/', views.TradeCreateView.as_view(), name='trades_create'),
     path('trades/<pk>/update/', views.TradeUpdateView.as_view(), name='trades_update'),
     path('trades/<pk>/delete/', views.TradeDeleteView.as_view(), name='trades_delete'),

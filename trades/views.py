@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
@@ -54,6 +54,12 @@ class TradeListView(LoginRequiredMixin, OwnerMixin, FilterView, SingleTableView)
     filterset_class = TradeFilter
     paginate_by = 10
     template_name = 'trades/trades_list.html'
+
+
+class TradeDetailView(LoginRequiredMixin, OwnerMixin, DetailView):
+    model = Trade
+    template_name = 'trades/trades_detail.html'
+    context_object_name = 'trade'
 
 
 class TradeCreateView(LoginRequiredMixin, CreateView):

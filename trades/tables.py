@@ -32,7 +32,7 @@ class TradingAccountTable(Table):
 class TradeTable(Table):
     # title = Column(linkify=True)
     actions = TemplateColumn(template_code=
-                             "<a class='p-3' href='{% url 'trades_update' record.pk %}'><i class='bi bi-pencil-square'></i></a> \
+                             "<a class='p-3' href='{% url 'trades_detail' record.pk %}'><i class='bi bi-envelope-open'></i> \
                              <a href='{% url 'trades_delete' record.pk %}'><i class='bi bi-trash'></i>",
                              orderable=False)
 
@@ -50,5 +50,5 @@ class TradeTable(Table):
         fields = ['identifier', 'trading_account', 'symbol',
                   'side', 'opened_at', 'open_price', 'volume',
                   'stop_loss', 'take_profit', 'close_price',
-                  'closed_at', 'reason', 'actions']
+                  'reason', 'actions']
         orderable = True
