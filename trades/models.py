@@ -54,7 +54,7 @@ class Trade(models.Model):
 
     class Reason(models.TextChoices):
         TP = 'TP', 'TP'
-        SL = 'SL', 'TP'
+        SL = 'SL', 'SL'
 
     owner = models.ForeignKey(
         get_user_model(),
