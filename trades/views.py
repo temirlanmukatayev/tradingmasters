@@ -8,18 +8,7 @@ from django_tables2 import SingleTableView
 from .filters import TradingAccountFilter
 from .models import TradingAccount, Trade
 from .tables import TradingAccountTable
-
-
-class OwnerMixin:
-    def get_queryset(self):
-        qs = super().get_queryset()
-        return qs.filter(owner=self.request.user)
-    
-
-class OwnerEditMixin:
-    def form_valid(self, form):
-        form.instance.owner = self.request.user
-        return super().form_valid(form)
+from .mixins import OwnerMixin, OwnerEditMixin
     
 
 class HomePageView(TemplateView):
@@ -49,16 +38,6 @@ class TradingAccountUpdateView(LoginRequiredMixin, OwnerEditMixin, UpdateView):
     fields = ['identifier', 'title', 'description', 'type', 'initial_balance', 'active']
     success_url = reverse_lazy('accounts_list')
     template_name_suffix = '_update_form'
-
-
-class TradingHistoryView(LoginRequiredMixin, TemplateView):
-    template_name = 'trading_history.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['accounts'] = TradingAccount.objects.filter(owner=self.request.user)
-        context['trades'] = Trade.objects.filter(owner=self.request.user)
-        return context
 
 
 class TradingAccountDeleteView(LoginRequiredMixin, OwnerMixin, DeleteView):
