@@ -106,6 +106,12 @@ class Trade(models.Model):
         return self.identifier
 
 
+class TradeLink(models.Model):
+    title = models.CharField(blank=True, max_length=64)
+    trade = models.ForeignKey(Trade, on_delete=models.CASCADE)
+    url = models.URLField()
+
+
 # class Setup(models.Model):
 #     title = models.CharField(max_length=100)
 #     description = models.TextField()

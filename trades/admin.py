@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import TradingAccount, Trade
+from .models import TradingAccount, Trade, TradeLink
 
 @admin.register(TradingAccount)
 class TradingAccountAdmin(admin.ModelAdmin):
@@ -14,3 +14,7 @@ class TradeAdmin(admin.ModelAdmin):
     list_display = ['identifier', 'trading_account', 'symbol', 'opened_at', 'volume', 'side', 'profit', 'reason']
     list_filter = ['reason', 'side', 'market']
     search_fields = ['notes']
+
+@admin.register(TradeLink)
+class TradeLinkAdmin(admin.ModelAdmin):
+    list_display = ['title', 'trade', 'url']

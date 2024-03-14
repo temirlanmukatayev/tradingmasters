@@ -4,6 +4,8 @@ from .models import Trade
 
 
 class TradeForm(forms.ModelForm):
+    url_title = forms.CharField(required=False, max_length=64)
+    url = forms.URLField(required=False)
     
     class Meta:
         model = Trade

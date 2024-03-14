@@ -1,13 +1,14 @@
 from django.views.generic import TemplateView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django_filters.views import FilterView
 from django_tables2 import SingleTableView
 
 from .filters import TradingAccountFilter, TradeFilter
 from .forms import TradeForm
-from .models import TradingAccount, Trade
+from .models import TradingAccount, Trade, TradeLink
 from .tables import TradingAccountTable, TradeTable
 from .mixins import OwnerMixin, OwnerEditMixin
     
@@ -70,7 +71,13 @@ class TradeCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
-        return super(TradeCreateView, self).form_valid(form)
+        # return super(TradeCreateView, self).form_valid(form)
+        result = super(TradeCreateView, self).form_valid(form)
+        url = form.cleaned_data['url']
+        url_title = form.cleaned_data['url_title']
+        if url != "":
+            TradeLink.objects.create(trade=form.instance, url=url, )
+        return(result)
 
 
 class TradeUpdateView(LoginRequiredMixin, OwnerEditMixin, UpdateView):
