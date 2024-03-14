@@ -5,7 +5,7 @@ from .models import TradingAccount, Trade
 class TradingAccountTable(Table):
     # title = Column(linkify=True)
     links = TemplateColumn(template_code=
-                             "<a href='{% url 'accounts_update' record.pk %}'><i class='bi bi-card-checklist'></i> \
+                             "<a href='{% url 'trades_list' %}?trading_account={{record.pk}}'><i class='bi bi-card-checklist'></i> \
                              <a class='p-3' href='{% url 'accounts_update' record.pk %}'><i class='bi bi-pencil-square'></i></a>",
                              orderable=False)
 
