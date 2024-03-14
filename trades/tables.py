@@ -4,7 +4,7 @@ from .models import TradingAccount, Trade
 
 class TradingAccountTable(Table):
     # title = Column(linkify=True)
-    links = TemplateColumn(template_code=
+    actions = TemplateColumn(template_code=
                              "<a href='{% url 'trades_list' %}?trading_account={{record.pk}}'><i class='bi bi-card-checklist'></i> \
                              <a class='p-3' href='{% url 'accounts_update' record.pk %}'><i class='bi bi-pencil-square'></i></a>",
                              orderable=False)
@@ -25,13 +25,13 @@ class TradingAccountTable(Table):
         }
         model = TradingAccount
         fields = ['identifier', 'title', 'type',
-                  'initial_balance', 'active', 'created_at', 'links']
+                  'initial_balance', 'active', 'created_at', 'actions']
         orderable = True
 
 
 class TradeTable(Table):
     # title = Column(linkify=True)
-    links = TemplateColumn(template_code=
+    actions = TemplateColumn(template_code=
                              "<a class='p-3' href='{% url 'trades_update' record.pk %}'><i class='bi bi-pencil-square'></i></a> \
                              <a href='{% url 'trades_delete' record.pk %}'><i class='bi bi-trash'></i>",
                              orderable=False)
@@ -50,5 +50,5 @@ class TradeTable(Table):
         fields = ['identifier', 'trading_account', 'symbol',
                   'side', 'opened_at', 'open_price', 'volume',
                   'stop_loss', 'take_profit', 'close_price',
-                  'closed_at', 'reason']
+                  'closed_at', 'reason', 'actions']
         orderable = True
