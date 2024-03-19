@@ -94,7 +94,7 @@ class TradeDeleteView(LoginRequiredMixin, OwnerMixin, DeleteView):
     template_name = 'trades/trade_confirm_delete.html'
 
 
-class TradeImportView(LoginRequiredMixin, FormView):
+class TradeImportView(LoginRequiredMixin, OwnerMixin, FormView):
     template_name = 'trades/trades_import.html'
     form_class = TradeImportForm
     success_url = reverse_lazy('trades_list')
