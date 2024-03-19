@@ -15,7 +15,7 @@ class TradingAccount(models.Model):
         get_user_model(),
         on_delete=models.CASCADE,
     )
-    identifier = models.CharField(blank=True, max_length=25)
+    identifier = models.CharField(unique=True, blank=True, null=True, max_length=25)
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     type = models.CharField(max_length=4,
@@ -63,7 +63,7 @@ class Trade(models.Model):
     )
     trading_account = models.ForeignKey(TradingAccount, on_delete=models.CASCADE)
     opened_at = models.DateTimeField(blank=True, null=True)
-    identifier = models.CharField(blank=True, max_length=25)
+    identifier = models.CharField(unique=True, blank=True, null=True, max_length=25)
     symbol = models.CharField(max_length=16)
     side = models.CharField(
         max_length=3,
