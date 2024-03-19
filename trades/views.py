@@ -1,13 +1,14 @@
+from django.core.exceptions import ValidationError
 from django.views.generic import TemplateView, DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, FormView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 from django_filters.views import FilterView
 from django_tables2 import SingleTableView
 
 from .filters import TradingAccountFilter, TradeFilter
-from .forms import TradeForm
+from .forms import TradeForm, TradeImportForm
 from .models import TradingAccount, Trade, TradeLink
 from .tables import TradingAccountTable, TradeTable
 from .mixins import OwnerMixin, OwnerEditMixin
@@ -91,3 +92,21 @@ class TradeDeleteView(LoginRequiredMixin, OwnerMixin, DeleteView):
     model = Trade
     success_url = reverse_lazy('trades_list')
     template_name = 'trades/trade_confirm_delete.html'
+
+
+class TradeImportView(LoginRequiredMixin, FormView):
+    template_name = 'trades/trades_import.html'
+    form_class = TradeImportForm
+    success_url = reverse_lazy('trades_list')
+
+    def form_valid(self, form):
+        form.trade_import()
+        return(super().form_valid(form))
+    
+    def get_form_kwargs(self):
+        ''' Passes the request object to the form class.
+         This is necessary to only display TradingAccounts that belong to a given user'''
+
+        kwargs = super(TradeImportView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs

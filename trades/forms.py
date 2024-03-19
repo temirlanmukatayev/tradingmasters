@@ -1,6 +1,10 @@
-from django import forms
+import csv
+from io import TextIOWrapper
 
-from .models import Trade
+from django import forms
+from django.core.validators import FileExtensionValidator
+
+from .models import Trade, TradingAccount
 
 
 class TradeForm(forms.ModelForm):
@@ -18,3 +22,75 @@ class TradeForm(forms.ModelForm):
             'opened_at': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
             'closed_at': forms.DateTimeInput(attrs={'type': 'datetime-local'})
         }
+
+
+class TradeImportForm(forms.Form):
+
+    def __init__(self, *args, **kwargs):
+        ''' Grants access to the request object so that only members of the
+        current user are given as options'''
+        self.request = kwargs.pop('request')
+        super(TradeImportForm, self).__init__(*args, **kwargs)
+        self.fields['accounts'].queryset = TradingAccount.objects.filter(
+            owner=self.request.user)
+        self.user = self.request.user
+
+    accounts = forms.ModelChoiceField(queryset=TradingAccount.objects.all())
+    file = forms.FileField(validators=[FileExtensionValidator(['csv'])])
+
+    def trade_import(self):
+        '''Imports trades from file'''
+        new_trade = {}
+        total = 0
+        account = self.cleaned_data['accounts']
+        try:
+            f = TextIOWrapper(self.cleaned_data['file'])
+            trades = list(csv.DictReader(f))
+            for trade in trades:
+                for key, value in trade.items():
+                    if account:
+                        new_trade['trading_account'] = account
+                    if self.user:
+                        new_trade['owner'] = self.user
+                    if key.lower() == 'id':
+                        new_trade['identifier'] = value
+                    if key.lower() == 'deal':
+                        new_trade['identifier'] = value
+                    if key.lower() == 'symbol':
+                        new_trade['symbol'] = value
+                    if key.lower() == 'open time':
+                        new_trade['opened_at'] = value
+                    if key.lower() == 'volume':
+                        new_trade['volume'] = value
+                    if key.lower() == 'side':
+                        if value.lower() == 'buy':
+                            new_trade['side'] = 'BUY'
+                        if value.lower() == 'sell':
+                            new_trade['side'] = 'SEL'
+                    if key.lower() == 'close time':
+                        new_trade['closed_at'] = value
+                    if key.lower() == 'open price':
+                        new_trade['open_price'] = value
+                    if key.lower() == 'close price':
+                        new_trade['close_price'] = value
+                    if key.lower() == 'stop loss':
+                        new_trade['stop_loss'] = value
+                    if key.lower() == 'take profit':
+                        new_trade['take_profit'] = value
+                    if key.lower() == 'swap':
+                        new_trade['swap'] = value
+                    if key.lower() == 'comission':
+                        new_trade['comission'] = value
+                    if key.lower() == 'profit':
+                        new_trade['profit'] = value
+                    if key.lower() == 'reason':
+                        if value == 'Stop Loss' or 'Stop Out':
+                            value = 'SL'
+                        if value == 'Take Profit':
+                            value = 'TP'
+                        new_trade['reason'] = value
+                Trade.objects.create(**new_trade)
+            status = 'success'
+
+        except csv.Error:
+            status = 'CSV file error'
