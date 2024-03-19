@@ -90,11 +90,12 @@ class TradeImportForm(forms.Form):
                             value = 'TP'
                         new_trade['reason'] = value
                 try:
-                    Trade.objects.create(**new_trade)
+                    if Trade.objects.create(**new_trade):
+                        total += 1
                 except:
                     print(f"Trade {new_trade['identifier']} already exists")
                     continue
-            status = 'success'
+            return total
 
         except csv.Error:
             status = 'CSV file error'
