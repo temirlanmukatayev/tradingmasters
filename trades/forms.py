@@ -57,6 +57,8 @@ class TradeImportForm(forms.Form):
                     if key.lower() == 'deal':
                         new_trade['identifier'] = value
                     if key.lower() == 'symbol':
+                        if value.endswith('x'):
+                            value = value.rstrip('x')
                         new_trade['symbol'] = value
                     if key.lower() == 'open time':
                         new_trade['opened_at'] = value
