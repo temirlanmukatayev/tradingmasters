@@ -15,7 +15,7 @@ class TradingAccount(models.Model):
         get_user_model(),
         on_delete=models.CASCADE,
     )
-    identifier = models.CharField(unique=True, blank=True, null=True, max_length=25)
+    identifier = models.CharField(blank=True, null=True, max_length=25)
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     type = models.CharField(max_length=4,
@@ -29,8 +29,11 @@ class TradingAccount(models.Model):
     
     class Meta:
         ordering = ['-created_at']
-        indexes = [
-            models.Index(fields=['-title']),
+        constraints = [
+            models.UniqueConstraint(
+                fields=['identifier', 'owner'],
+                name='unique_tradingaccount_and_owner'
+            )                                                  
         ]
 
     def __str__(self):
@@ -38,7 +41,6 @@ class TradingAccount(models.Model):
     
     def get_absolute_url(self):
         return reverse('accounts_list')
-        # return reverse('accounts_list', args=[str(self.id)])
 
 
 class Trade(models.Model):

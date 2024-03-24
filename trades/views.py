@@ -9,7 +9,7 @@ from django_filters.views import FilterView
 from django_tables2 import SingleTableView
 
 from .filters import TradingAccountFilter, TradeFilter
-from .forms import TradeForm, TradeImportForm
+from .forms import TradingAccountForm, TradeForm, TradeImportForm
 from .models import TradingAccount, Trade, TradeLink
 from .tables import TradingAccountTable, TradeTable
 from .mixins import OwnerMixin, OwnerEditMixin
@@ -21,16 +21,23 @@ class HomePageView(TemplateView):
 
 class TradingAccountsCreateView(LoginRequiredMixin, CreateView):
     model = TradingAccount
-    fields = ['identifier', 'title', 'description', 'type', 'initial_balance', 'active']
+    form_class = TradingAccountForm
     success_url = reverse_lazy('accounts_list')
     template_name = 'trading_accounts/tradingaccount_create.html'
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
         return super(TradingAccountsCreateView, self).form_valid(form)
+    
+    def get_form_kwargs(self):
+        '''Passes the request object to the form class.'''
+        kwargs = super(TradingAccountsCreateView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
 
 
-class TradingAccountListView(LoginRequiredMixin, OwnerMixin, FilterView, SingleTableView):
+class TradingAccountListView(
+    LoginRequiredMixin, OwnerMixin,FilterView, SingleTableView):
     model = TradingAccount
     table_class = TradingAccountTable
     filterset_class = TradingAccountFilter
@@ -40,7 +47,10 @@ class TradingAccountListView(LoginRequiredMixin, OwnerMixin, FilterView, SingleT
 
 class TradingAccountUpdateView(LoginRequiredMixin, OwnerEditMixin, UpdateView):
     model = TradingAccount
-    fields = ['identifier', 'title', 'description', 'type', 'initial_balance', 'active']
+    fields = [
+        'identifier', 'title', 'description',
+        'type','initial_balance', 'active'
+        ]
     success_url = reverse_lazy('accounts_list')
     template_name = 'trading_accounts/tradingaccount_update.html'
 
@@ -106,9 +116,10 @@ class TradeImportView(LoginRequiredMixin, OwnerMixin, FormView):
         return(super().form_valid(form))
     
     def get_form_kwargs(self):
-        ''' Passes the request object to the form class.
-         This is necessary to only display TradingAccounts that belong to a given user'''
-
+        '''
+        Passes the request object to the form class. This is necessary to
+        only display TradingAccounts that belong to a given user.
+        '''
         kwargs = super(TradeImportView, self).get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs

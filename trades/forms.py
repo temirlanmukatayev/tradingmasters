@@ -7,10 +7,43 @@ from django.core.validators import FileExtensionValidator
 from .models import Trade, TradingAccount
 
 
+class TradingAccountForm(forms.ModelForm):
+    '''Form for TradingAccount creation'''
+    
+    class Meta:
+        model = TradingAccount
+        fields = [
+            'identifier', 'title', 'description',
+            'type', 'initial_balance', 'active'
+        ]
+    
+    def __init__(self, *args, **kwargs):
+        '''Grants access to the request object.'''
+        self.request = kwargs.pop('request')
+        super(TradingAccountForm, self).__init__(*args, **kwargs)
+
+    def clean(self, *args, **kwargs):
+        super().clean(*args, **kwargs)
+        identifier = self.cleaned_data['identifier']
+        duplicates = TradingAccount.objects.filter(
+            identifier=identifier,
+            owner=self.request.user
+        )
+        if self.instance.pk:
+            duplicates = duplicates.exclude(pk=self.instance.pk)
+        if duplicates.exists():
+            raise forms.ValidationError(
+                'Trading Account with such Identifier already exists.'
+                'Please set another Identifier'
+            )
+
+
 class TradeForm(forms.ModelForm):
-    links = forms.CharField(required=False,
-                                   widget=forms.Textarea(attrs={'rows': 5, 'cols': 30}),
-                                   help_text='Each url from a new line')
+    links = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'rows': 5, 'cols': 30}),
+        help_text='Each url from a new line'
+    )
     
     class Meta:
         model = Trade
@@ -27,8 +60,10 @@ class TradeForm(forms.ModelForm):
 class TradeImportForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
-        ''' Grants access to the request object so that only members of the
-        current user are given as options'''
+        '''
+        Grants access to the request object so that only members of the
+        current user are given as options.
+        '''
         self.request = kwargs.pop('request')
         super(TradeImportForm, self).__init__(*args, **kwargs)
         self.fields['accounts'].queryset = TradingAccount.objects.filter(
