@@ -2,7 +2,6 @@ from urllib.parse import urlparse
 
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.urls import reverse
 
 
 class TradingAccount(models.Model):
@@ -101,7 +100,7 @@ class Trade(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['identifier', 'trading_account', 'owner'],
+                fields=['trading_account', 'identifier', 'owner'],
                 name='unique_tradingaccount_and_owner_and_identifier'
             )                                                  
         ]

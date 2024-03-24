@@ -77,7 +77,7 @@ class TradeForm(forms.ModelForm):
             duplicates = duplicates.exclude(pk=self.instance.pk)
         if duplicates.exists():
             raise forms.ValidationError(
-                'Trading Account with such Identifier already exists.'
+                'Trading Account with such Identifier already exists. '
                 'Please set another Identifier.'
             )
 
@@ -152,8 +152,9 @@ class TradeImportForm(forms.Form):
                 try:
                     if Trade.objects.create(**new_trade):
                         total += 1
-                except:
-                    print(f"Trade {new_trade['identifier']} already exists")
+                except Exception as e:
+                    # print(f"Trade {new_trade['identifier']} already exists")
+                    # print('%s' % type(e))
                     continue
             return total
 
