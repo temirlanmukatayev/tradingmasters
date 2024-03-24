@@ -8,7 +8,6 @@ from .models import Trade, TradingAccount
 
 
 class TradingAccountForm(forms.ModelForm):
-    '''Form for TradingAccount creation'''
     
     class Meta:
         model = TradingAccount
@@ -18,11 +17,12 @@ class TradingAccountForm(forms.ModelForm):
         ]
     
     def __init__(self, *args, **kwargs):
-        '''Grants access to the request object.'''
+        """Add request object to the arguments."""
         self.request = kwargs.pop('request')
         super(TradingAccountForm, self).__init__(*args, **kwargs)
 
     def clean(self, *args, **kwargs):
+        """Validate unique identifier of the TradingAccount."""
         super().clean(*args, **kwargs)
         identifier = self.cleaned_data['identifier']
         duplicates = TradingAccount.objects.filter(
@@ -57,13 +57,14 @@ class TradeForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        '''Grants access to the request object.'''
+        """Add request object to the arguments."""
         self.request = kwargs.pop('request')
         super(TradeForm, self).__init__(*args, **kwargs)
         self.fields['trading_account'].queryset = TradingAccount.objects.filter(
             owner=self.request.user)
 
     def clean(self, *args, **kwargs):
+        """Validate unique identifier of the Trade."""
         super().clean(*args, **kwargs)
         identifier = self.cleaned_data['identifier']
         trading_account = self.cleaned_data['trading_account']
@@ -84,10 +85,8 @@ class TradeForm(forms.ModelForm):
 class TradeImportForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
-        '''
-        Grants access to the request object so that only members of the
-        current user are given as options.
-        '''
+        """Add request object to the arguments for filtering TradingAccounts
+        by logged in user."""
         self.request = kwargs.pop('request')
         super(TradeImportForm, self).__init__(*args, **kwargs)
         self.fields['accounts'].queryset = TradingAccount.objects.filter(
@@ -98,7 +97,7 @@ class TradeImportForm(forms.Form):
     file = forms.FileField(validators=[FileExtensionValidator(['csv'])])
 
     def trade_import(self):
-        '''Imports trades from file'''
+        """Import trades from a file."""
         new_trade = {}
         total = 0
         account = self.cleaned_data['accounts']

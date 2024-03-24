@@ -1,6 +1,7 @@
 from urllib.parse import urlparse
-from django.db import models
+
 from django.contrib.auth import get_user_model
+from django.db import models
 from django.urls import reverse
 
 
@@ -28,7 +29,6 @@ class TradingAccount(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
-        ordering = ['-created_at']
         constraints = [
             models.UniqueConstraint(
                 fields=['identifier', 'owner'],
@@ -38,9 +38,6 @@ class TradingAccount(models.Model):
 
     def __str__(self):
         return self.title
-    
-    def get_absolute_url(self):
-        return reverse('accounts_list')
 
 
 class Trade(models.Model):
@@ -63,7 +60,9 @@ class Trade(models.Model):
         get_user_model(),
         on_delete=models.CASCADE,
     )
-    trading_account = models.ForeignKey(TradingAccount, on_delete=models.CASCADE)
+    trading_account = models.ForeignKey(
+        TradingAccount, on_delete=models.CASCADE
+    )
     opened_at = models.DateTimeField(blank=True, null=True)
     identifier = models.CharField(blank=True, null=True, max_length=25)
     symbol = models.CharField(max_length=16)
@@ -100,7 +99,6 @@ class Trade(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
-        ordering = ['-opened_at']
         constraints = [
             models.UniqueConstraint(
                 fields=['identifier', 'trading_account', 'owner'],
@@ -113,7 +111,6 @@ class Trade(models.Model):
 
 
 class TradeLink(models.Model):
-    # title = models.CharField(blank=True, max_length=64)
     trade = models.ForeignKey(Trade, on_delete=models.CASCADE)
     url = models.URLField()
 
