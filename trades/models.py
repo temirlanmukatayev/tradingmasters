@@ -65,7 +65,7 @@ class Trade(models.Model):
     )
     trading_account = models.ForeignKey(TradingAccount, on_delete=models.CASCADE)
     opened_at = models.DateTimeField(blank=True, null=True)
-    identifier = models.CharField(unique=True, blank=True, null=True, max_length=25)
+    identifier = models.CharField(blank=True, null=True, max_length=25)
     symbol = models.CharField(max_length=16)
     side = models.CharField(
         max_length=3,
@@ -101,9 +101,12 @@ class Trade(models.Model):
     
     class Meta:
         ordering = ['-opened_at']
-        # indexes = [
-        #     models.Index(fields=['-publish']),
-        # ]
+        constraints = [
+            models.UniqueConstraint(
+                fields=['identifier', 'trading_account', 'owner'],
+                name='unique_tradingaccount_and_owner_and_identifier'
+            )                                                  
+        ]
 
     def __str__(self):
         return self.identifier

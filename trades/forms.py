@@ -34,7 +34,7 @@ class TradingAccountForm(forms.ModelForm):
         if duplicates.exists():
             raise forms.ValidationError(
                 'Trading Account with such Identifier already exists.'
-                'Please set another Identifier'
+                'Please set another Identifier.'
             )
 
 
@@ -55,6 +55,28 @@ class TradeForm(forms.ModelForm):
             'opened_at': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
             'closed_at': forms.DateTimeInput(attrs={'type': 'datetime-local'})
         }
+
+    def __init__(self, *args, **kwargs):
+        '''Grants access to the request object.'''
+        self.request = kwargs.pop('request')
+        super(TradeForm, self).__init__(*args, **kwargs)
+
+    def clean(self, *args, **kwargs):
+        super().clean(*args, **kwargs)
+        identifier = self.cleaned_data['identifier']
+        trading_account = self.cleaned_data['trading_account']
+        duplicates = Trade.objects.filter(
+            identifier=identifier,
+            owner=self.request.user,
+            trading_account=trading_account
+        )
+        if self.instance.pk:
+            duplicates = duplicates.exclude(pk=self.instance.pk)
+        if duplicates.exists():
+            raise forms.ValidationError(
+                'Trading Account with such Identifier already exists.'
+                'Please set another Identifier.'
+            )
 
 
 class TradeImportForm(forms.Form):

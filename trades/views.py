@@ -90,6 +90,12 @@ class TradeCreateView(LoginRequiredMixin, CreateView):
             for url in urls:
                 TradeLink.objects.create(trade=form.instance, url=url, )
         return(result)
+    
+    def get_form_kwargs(self):
+        '''Passes the request object to the form class.'''
+        kwargs = super(TradeCreateView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
 
 
 class TradeUpdateView(LoginRequiredMixin, OwnerEditMixin, UpdateView):
