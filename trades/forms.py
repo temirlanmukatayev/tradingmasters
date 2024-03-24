@@ -60,6 +60,8 @@ class TradeForm(forms.ModelForm):
         '''Grants access to the request object.'''
         self.request = kwargs.pop('request')
         super(TradeForm, self).__init__(*args, **kwargs)
+        self.fields['trading_account'].queryset = TradingAccount.objects.filter(
+            owner=self.request.user)
 
     def clean(self, *args, **kwargs):
         super().clean(*args, **kwargs)
