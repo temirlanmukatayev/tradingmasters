@@ -106,6 +106,13 @@ class TradeUpdateView(LoginRequiredMixin, OwnerEditMixin, UpdateView):
     success_url = reverse_lazy('trades_list')
     template_name = 'trades/trade_update.html'
 
+    def get_form_kwargs(self):
+        """Pass the request object to the form class. Necessary to display
+        only TradingAccounts that belong to the current user."""
+        kwargs = super(TradeUpdateView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
 
 class TradeDeleteView(LoginRequiredMixin, OwnerMixin, DeleteView):
     model = Trade
