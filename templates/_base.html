@@ -71,6 +71,15 @@
     </header>
 
     <div class="container">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-primary alert-dismissible fade show" role="alert">
+            <i class="bi bi-info-circle"></i>&emsp;
+            {{ message | safe }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
       {% block content %}
       {% endblock content %}
     </div>

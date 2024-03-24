@@ -9,18 +9,6 @@
 {% block content %}
   <div class="row">
     <div class="col mt-5">
-      
-      {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-primary alert-dismissible fade show" role="alert">
-            <i class="bi bi-info-circle"></i>&emsp;
-            {{ message | safe }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-        {% endfor %}
-      {% endif %}
-        
-        
       <h1>My Trades <a href="{% url 'trades_create' %}" class="btn btn-sm btn-outline-primary">Create new</a></h1>
     </div>
   </div>
