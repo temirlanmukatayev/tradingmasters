@@ -5,11 +5,8 @@ from .models import Trade, TradingAccount
 
 class TradingAccountTable(Table):
     actions = TemplateColumn(
-        template_code="<a href='{% url 'trades_list' %}?\
-            trading_account={{record.pk}}'>\
-            <i class='bi bi-card-checklist'></i>\
-            <a class='p-3' href='{% url 'accounts_update' record.pk %}'>\
-            <i class='bi bi-pencil-square'></i></a>",
+        template_code="<a href='{% url 'trades_list' %}?trading_account={{record.pk}}'>\<i class='bi bi-card-checklist'></i></a>\
+            <a class='p-3' href='{% url 'accounts_update' record.pk %}'><i class='bi bi-pencil-square'></i></a>",
         orderable=False
     )
 
@@ -24,10 +21,8 @@ class TradingAccountTable(Table):
 
 class TradeTable(Table):
     actions = TemplateColumn(
-        template_code="<a class='p-3' href='{% url 'trades_detail' record.pk %}'>\
-            <i class='bi bi-envelope-open'></i> \
-            <a href='{% url 'trades_delete' record.pk %}'>\
-            <i class='bi bi-trash'></i>",
+        template_code="<a class='p-3' href='{% url 'trades_detail' record.pk %}'><i class='bi bi-envelope-open'></i></a> \
+            <a href='{% url 'trades_delete' record.pk %}'><i class='bi bi-trash'></i></a>",
         orderable=False
     )
 
