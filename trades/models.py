@@ -82,7 +82,6 @@ class Trade(models.Model):
     reason = models.CharField(
         max_length=2,
         choices=Reason.choices,
-        default=Reason.TP,
     )
     market = models.CharField(
         max_length=2,

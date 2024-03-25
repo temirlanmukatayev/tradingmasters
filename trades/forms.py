@@ -139,11 +139,13 @@ class TradeImportForm(forms.Form):
                     if key.lower() == 'profit':
                         new_trade['profit'] = value
                     if key.lower() == 'reason':
-                        if value == 'Stop Loss' or 'Stop Out':
-                            value = 'SL'
-                        if value == 'Take Profit':
-                            value = 'TP'
-                        new_trade['reason'] = value
+                        print(f"Trade {value} already exists")
+                        # if value == 'Stop Loss' or 'Stop Out':
+                        #     new_trade['reason'] = 'SL'
+                        # elif value == 'Take Profit':
+                        #     new_trade['reason'] = 'TP'
+                        # else:
+                        #     continue
                 try:
                     if Trade.objects.create(**new_trade):
                         total += 1
