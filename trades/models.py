@@ -92,7 +92,10 @@ class Trade(models.Model):
     rr = models.IntegerField(blank=True, null=True)
     risk = models.IntegerField(blank=True, null=True)
     notes = models.CharField(max_length=200, blank=True)
-    link = models.URLField(blank=True)
+    links = models.TextField(max_length=1024, blank=True,
+                             help_text=
+                             'Each link from new line in the format: '
+                             'http://tradingview.com/')
     image = models.ImageField(upload_to='trades/images/%Y/%m/%d/', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -107,15 +110,6 @@ class Trade(models.Model):
 
     def __str__(self):
         return self.identifier
-
-
-class TradeLink(models.Model):
-    trade = models.ForeignKey(Trade, on_delete=models.CASCADE)
-    url = models.URLField()
-
-    def __str__(self):
-        title = 'Link to ' + urlparse(self.url).netloc
-        return title
 
 
 # class Setup(models.Model):

@@ -11,14 +11,13 @@
       
       <p>{{ trade.open_price }}</p>
       
-      {% with trade.tradelink_set.all as links %}
-        
+      <p>
+      {% with trade.links.split as links %}
         {% for link in links %}
-          <p><a class="text-decoration-none" href="{{ link.url }}">{{ link }}</a></p>
+        <a class="text-decoration-none" href="{{ link }}" target="_blank">{{ link }}</a> 
         {% endfor %}
-          
       {% endwith %}
-        
+      </p>
         
     </div>
   </div>

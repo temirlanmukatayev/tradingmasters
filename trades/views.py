@@ -10,7 +10,7 @@ from django_tables2 import SingleTableView
 from .filters import TradeFilter, TradingAccountFilter
 from .forms import TradeForm, TradeImportForm, TradingAccountForm
 from .mixins import OwnerEditMixin, OwnerMixin
-from .models import Trade, TradeLink, TradingAccount
+from .models import Trade, TradingAccount
 from .tables import TradeTable, TradingAccountTable
 
 
@@ -86,11 +86,6 @@ class TradeCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.owner = self.request.user
         result = super(TradeCreateView, self).form_valid(form)
-        links = form.cleaned_data['links']
-        if links != "":
-            urls = links.split()
-            for url in urls:
-                TradeLink.objects.create(trade=form.instance, url=url, )
         return(result)
     
     def get_form_kwargs(self):
