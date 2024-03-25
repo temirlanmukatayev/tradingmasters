@@ -31,6 +31,6 @@ class TradeTable(Table):
         fields = [
             'identifier', 'trading_account', 'symbol', 'side',
             'opened_at', 'open_price', 'volume', 'stop_loss',
-            'take_profit', 'close_price', 'reason', 'actions'
+            'take_profit', 'close_price', 'profit', 'actions'
         ]
         orderable = True
