@@ -29,9 +29,9 @@
           <div class="carousel-indicators">
             {% for link in links %}
               {% if forloop.first %}
-              <button type="button" data-bs-target="#tradeImagesCarousel" data-bs-slide-to="{{ forloop.counter }}" class="active" aria-current="true" aria-label="Slide {{ forloop.counter }}"></button>
+              <button type="button" data-bs-target="#tradeImagesCarousel" data-bs-slide-to="{{ forloop.counter0 }}" class="active" aria-current="true" aria-label="Slide {{ forloop.counter }}"></button>
               {% else %}
-              <button type="button" data-bs-target="#tradeImagesCarousel" data-bs-slide-to="{{ forloop.counter }}" aria-label="Slide {{ forloop.counter }}"></button>
+              <button type="button" data-bs-target="#tradeImagesCarousel" data-bs-slide-to="{{ forloop.counter0 }}" aria-label="Slide {{ forloop.counter }}"></button>
               {% endif %}
             {% endfor %}
           </div>
