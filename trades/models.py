@@ -40,7 +40,7 @@ class TradingAccount(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('trading_account_detail', kwargs={'pk': self.pk})
+        return reverse('accounts_detail', kwargs={'pk': self.pk})
 
 
 class Trade(models.Model):

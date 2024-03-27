@@ -35,5 +35,5 @@ class TradingAccountModelTest(TestCase):
     def test_get_absolute_url(self):
         self.assertEqual(
             self.trading_account.get_absolute_url(),
-            reverse('trades_detail', self.trading_account.pk)
+            reverse('accounts_detail', kwargs={'pk': self.trading_account.pk})
         )
