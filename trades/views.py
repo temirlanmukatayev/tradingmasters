@@ -36,6 +36,12 @@ class TradingAccountsCreateView(LoginRequiredMixin, CreateView):
         return kwargs
 
 
+class TradingAccountDetailView(LoginRequiredMixin, OwnerMixin, DetailView):
+    model = TradingAccount
+    template_name = 'trading_accounts/account_detail.html'
+    context_object_name = 'trading_account'
+
+
 class TradingAccountListView(
     LoginRequiredMixin, OwnerMixin,FilterView, SingleTableView):
     model = TradingAccount

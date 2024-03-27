@@ -1,0 +1,12 @@
+{% extends '_base.html' %}
+
+{% load static %}
+
+{% block title %}Trading Account Details{% endblock title %}
+
+{% block content %}
+  <div class="row mt-5 mb-5">
+    <p>Title: {{ trading_account.title }}</p>
+    <p>Description: {{ trading_account.description }}</p>
+  </div>
+{% endblock content %}
