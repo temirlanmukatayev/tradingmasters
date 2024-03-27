@@ -2,6 +2,7 @@ from urllib.parse import urlparse
 
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.urls import reverse
 
 
 class TradingAccount(models.Model):
@@ -109,6 +110,9 @@ class Trade(models.Model):
 
     def __str__(self):
         return self.identifier
+    
+    def get_absolute_url(self):
+        return reverse("trades_detail", kwargs={"pk": self.pk})
 
 
 # class Setup(models.Model):

@@ -80,7 +80,7 @@ class TradeDetailView(LoginRequiredMixin, OwnerMixin, DetailView):
 class TradeCreateView(LoginRequiredMixin, CreateView):
     model = Trade
     form_class = TradeForm
-    success_url = reverse_lazy('trades_list')
+    # success_url = reverse_lazy('trades_list')
     template_name = 'trades/trades_create.html'
 
     def form_valid(self, form):
@@ -98,7 +98,7 @@ class TradeCreateView(LoginRequiredMixin, CreateView):
 class TradeUpdateView(LoginRequiredMixin, OwnerEditMixin, UpdateView):
     model = Trade
     form_class = TradeForm
-    success_url = reverse_lazy('trades_list')
+    # success_url = reverse_lazy('trades_list')
     template_name = 'trades/trade_update.html'
 
     def get_form_kwargs(self):
