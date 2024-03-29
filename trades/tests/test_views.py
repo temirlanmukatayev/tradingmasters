@@ -42,6 +42,13 @@ class TradingAccountCreateViewTest(TestCase):
         cls.url = reverse('accounts_create')
         cls.user = get_user_model().objects.get(pk=2)
 
+    def test_ta_create_anonymous_redirect(self):
+        response = self.client.get(self.url)
+        self.assertRedirects(
+            response,
+            '/accounts/login/?next=/accounts_create/'
+        )
+
     def test_ta_create_status_code(self):
         self.client.force_login(self.user)
         response = self.client.get(self.url)
@@ -73,18 +80,6 @@ class TradingAccountCreateViewTest(TestCase):
             view.func.__name__,
             views.TradingAccountsCreateView.as_view().__name__
         )
-
-    def test_ta_create_anonymous_cannot_see_page(self):
-        response = self.client.get(self.url)
-        self.assertRedirects(
-            response,
-            '/accounts/login/?next=/accounts_create/'
-        )
-
-    def test_ta_create_authenticated_user_can_see_page(self):
-        self.client.force_login(self.user)
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 200)
 
     def test_ta_creation(self):
         data = {
