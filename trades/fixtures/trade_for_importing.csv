@@ -1,0 +1,2 @@
+ID,Symbol,Open time,Volume,Side,Close time,Open price,Close Price,Stop loss,Take profit,Swap,Commission,Profit,Reason
+importedtradeid,EURUSD,2024-03-07T10:08:29.335,1.00,BUY,2024-03-07T10:41:28.724,1.08675,1.08775,1.08625,1.08775,0.00,-2.00,100.00,Take Profit

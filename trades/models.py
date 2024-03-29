@@ -16,8 +16,8 @@ class TradingAccount(models.Model):
         get_user_model(),
         on_delete=models.CASCADE,
     )
-    identifier = models.CharField(blank=True, null=True, max_length=25)
     title = models.CharField(max_length=100)
+    identifier = models.CharField(blank=True, null=True, max_length=25)
     description = models.TextField(blank=True)
     type = models.CharField(max_length=4,
         choices=AccountType.choices,

@@ -1,2 +1,7 @@
 Run postgres docker:
 docker run --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres
+
+Check test coverage:
+pip install coverage
+coverage run --omit='*/venv/*' manage.py test [my_app_name]
+coverage report
